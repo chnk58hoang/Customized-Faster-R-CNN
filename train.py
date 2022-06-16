@@ -40,6 +40,8 @@ train_val_dataset = CustomDataset(images_path=TRAIN_IMAGES, labels_path=TRAIN_LA
                                   classes=CLASSES)
 train_len = int(len(train_val_dataset) * 0.85)
 valid_len = len(train_val_dataset) - train_len
+print(train_len)
+print(valid_len)
 train_dataset, val_dataset = random_split(train_val_dataset, lengths=[train_len, valid_len])
 train_dataset.transforms = get_train_transform()
 val_dataset.transforms = get_valid_transform()
