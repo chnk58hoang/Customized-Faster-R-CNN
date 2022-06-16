@@ -12,6 +12,11 @@ plt.style.use('ggplot')
 
 # this class keeps track of the training and validation loss values...
 # ... and helps to get the average for each epoch as well
+
+
+
+
+
 class Averager:
     def __init__(self):
         self.current_total = 0.0
