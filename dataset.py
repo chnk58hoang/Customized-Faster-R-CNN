@@ -67,6 +67,8 @@ class CustomDataset(Dataset):
         # capture the corresponding XML file for getting the annotations
         annot_filename = image_name[:-4] + '.xml'
         annot_file_path = os.path.join(self.labels_path, annot_filename)
+        print(image_path)
+        print(annot_file_path)
 
         boxes = []
         labels = []
