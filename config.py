@@ -1,7 +1,6 @@
 import torch.cuda
 
 CLASSES = [
-    '__background__',
     'person', 'sofa', 'bottle', 'tvmonitor', 'cat', 'pottedplant',
     'horse', 'car', 'dog', 'train', 'bicycle', 'aeroplane',
     'diningtable', 'motorbike', 'chair', 'cow', 'bus', 'bird', 'boat',
