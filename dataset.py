@@ -61,6 +61,7 @@ class CustomDataset(Dataset):
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB).astype(np.float32)
         image_resized = cv2.resize(image, (self.width, self.height))
         image_resized /= 255.0
+        image_resized = torch.tensor(image_resized)
 
         # capture the corresponding XML file for getting the annotations
         annot_filename = image_name[:-4] + '.xml'
