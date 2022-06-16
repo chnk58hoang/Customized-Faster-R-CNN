@@ -22,6 +22,6 @@ NUM_WORKERS = 1
 DEVICE = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 # Images and labels direcotry should be relative to train.py
-TRAIN_IMAGES = '../input/pascal-voc-2012/VOC2012/JPEGImages'
-TRAIN_LABELS = '../input/pascal-voc-2012/VOC2012/JPEGImages'
+TRAIN_IMAGES = '/kaggle/input/pascal-voc-2012/VOC2012/JPEGImages/'
+TRAIN_LABELS = '/kaggle/input/pascal-voc-2012/VOC2012/Annotations/'
 
