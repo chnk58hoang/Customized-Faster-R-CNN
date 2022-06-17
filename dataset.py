@@ -60,16 +60,13 @@ class CustomDataset(Dataset):
         # convert BGR to RGB color format
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB).astype(np.float32)
         image_resized = cv2.resize(image, (self.width, self.height))
-        image_resized /= 255.0
         image_resized = torch.tensor(image_resized)
         image_resized = image_resized.transpose(0,2)
 
         # capture the corresponding XML file for getting the annotations
         annot_filename = image_name[:-4] + '.xml'
         annot_file_path = os.path.join(self.labels_path, annot_filename)
-        print(image_path)
-        print(annot_file_path)
-
+       
         boxes = []
         labels = []
         tree = et.parse(annot_file_path)
@@ -96,10 +93,10 @@ class CustomDataset(Dataset):
 
             # resize the bounding boxes according to the...
             # ... desired `width`, `height`
-            xmin_final = (xmin / image_width) * self.width
-            xmax_final = (xmax / image_width) * self.width
-            ymin_final = (ymin / image_height) * self.height
-            ymax_final = (ymax / image_height) * self.height
+            xmin_final = int((xmin / image_width) * self.width)
+            xmax_final = int((xmax / image_width) * self.width)
+            ymin_final = int((ymin / image_height) * self.height)
+            ymax_final = int((ymax / image_height) * self.height)
 
             boxes.append([xmin_final, ymin_final, xmax_final, ymax_final])
 

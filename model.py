@@ -7,18 +7,7 @@ from cluster import iou_base_cluster, euclid_base_cluster
 
 
 def create_model(num_classes, data, k,mode,fine_tune = False):
-    conv1 = torchvision.models.resnet18(pretrained=True).conv1
-    bn1 = torchvision.models.resnet18(pretrained=True).bn1
-    resnet18_relu = torchvision.models.resnet18(pretrained=True).relu
-    resnet18_max_pool = torchvision.models.resnet18(pretrained=True).maxpool
-    layer1 = torchvision.models.resnet18(pretrained=True).layer1
-    layer2 = torchvision.models.resnet18(pretrained=True).layer2
-    layer3 = torchvision.models.resnet18(pretrained=True).layer3
-    layer4 = torchvision.models.resnet18(pretrained=True).layer4
-    backbone = nn.Sequential(
-        conv1, bn1, resnet18_relu, resnet18_max_pool,
-        layer1, layer2, layer3, layer4
-    )
+    backbone = torchvision.models.vgg16(pretrained=True)
 
     for param in backbone.parameters():
         param.requires_grad = fine_tune
