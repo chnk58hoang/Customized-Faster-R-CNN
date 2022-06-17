@@ -3,7 +3,6 @@ import pandas as pd
 import torch
 from modifydata import modify
 from xml_to_csv import xml_to_csv
-from transform import get_train_transform
 from config import *
 from sklearn.model_selection import train_test_split
 from dataset import CustomDataset
@@ -40,8 +39,7 @@ train_val_dataset = CustomDataset(images_path=TRAIN_IMAGES, labels_path=TRAIN_LA
                                   classes=CLASSES)
 train_len = int(len(train_val_dataset) * 0.85)
 valid_len = len(train_val_dataset) - train_len
-print(train_len)
-print(valid_len)
+
 train_dataset, val_dataset = random_split(train_val_dataset, lengths=[train_len, valid_len])
 train_dataset.transforms = get_train_transform()
 val_dataset.transforms = get_valid_transform()
@@ -60,7 +58,7 @@ params = [p for p in model.parameters() if p.requires_grad == True]
 # optimizer = torch.optim.SGD(params, lr=0.001, momentum=0.9, weight_decay=0.0005)
 optimizer = torch.optim.Adam(params, lr=0.001, weight_decay=0.0005)
 # scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=EPOCHS + 25, T_mult=1, verbose=True)
-scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=3, gamma=0.5)
+scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.6)
 train_loss_list = []
 
 """Training progress"""
