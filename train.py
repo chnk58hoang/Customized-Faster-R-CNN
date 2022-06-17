@@ -17,9 +17,9 @@ parser.add_argument('--k', type=int, help='number of clusters')
 parser.add_argument('--min_dim', type=int, help='min_dimension')
 parser.add_argument('--max_dim', type=int, help='max_dimension')
 parser.add_argument('--mode', type=str, help='mode')
-
 parser.add_argument('--lr', default=0.001, type=float)
 parser.add_argument('--finetune', default=False, type=bool)
+parser.add_argument('--batchsize', default=32, type=int)
 
 args = parser.parse_args()
 
@@ -44,8 +44,8 @@ train_dataset, val_dataset = random_split(train_val_dataset, lengths=[train_len,
 train_dataset.transforms = get_train_transform()
 val_dataset.transforms = get_valid_transform()
 
-train_dataloader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, collate_fn=collate_fn)
-valid_dataloader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate_fn)
+train_dataloader = DataLoader(train_dataset, batch_size=args.batchsize, shuffle=True, collate_fn=collate_fn)
+valid_dataloader = DataLoader(val_dataset, batch_size=args.batchsize, shuffle=False, collate_fn=collate_fn)
 
 """create Faster R-CNN model"""
 model = create_model(len(CLASSES), k=args.k, data=modified_data, mode=args.mode, fine_tune=args.finetune)
