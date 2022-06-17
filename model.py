@@ -7,7 +7,7 @@ from cluster import iou_base_cluster, euclid_base_cluster
 
 
 def create_model(num_classes, data, k,mode,fine_tune = False):
-    backbone = torchvision.models.vgg16(pretrained=True)
+    backbone = torchvision.models.vgg16(pretrained=True).features()
 
     for param in backbone.parameters():
         param.requires_grad = fine_tune
