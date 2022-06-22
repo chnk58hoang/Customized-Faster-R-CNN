@@ -1,16 +1,13 @@
-import torch
-import cv2
-import numpy as np
 import os
 import glob as glob
-
 from xml.etree import ElementTree as et
+import cv2
+import numpy as np
 
+import torch
 from torch.utils.data import Dataset, DataLoader
 
 
-
-# the dataset class
 class CustomDataset(Dataset):
     def __init__(
             self, images_path, labels_path,
@@ -25,10 +22,11 @@ class CustomDataset(Dataset):
         self.image_file_types = ['*.jpg', '*.jpeg', '*.png', '*.ppm']
         self.all_image_paths = []
 
-        # get all the image paths in sorted order
+        # Get all the image paths in sorted order
         for file_type in self.image_file_types:
             self.all_image_paths.extend(glob.glob(f"{self.images_path}/{file_type}"))
         self.all_annot_paths = glob.glob(f"{self.labels_path}/*.xml")
+
         # Remove all annotations and images when no object is present.
         self.read_and_clean()
         self.all_images = [image_path.split(os.path.sep)[-1] for image_path in self.all_image_paths]
@@ -43,7 +41,7 @@ class CustomDataset(Dataset):
             tree = et.parse(annot_path)
             root = tree.getroot()
             object_present = False
-            for member in root.findall('object'):
+            for _ in root.findall('object'):
                 object_present = True
             if object_present == False:
                 print(f"Removing {annot_path} and corresponding image")
@@ -115,8 +113,8 @@ class CustomDataset(Dataset):
         target["labels"] = labels
         target["area"] = area
         target["iscrowd"] = iscrowd
-        image_id = torch.tensor([idx])
-        target["image_id"] = image_id
+        target["image_id"] = torch.tensor([idx])
+
         # apply the image transforms
         if self.transforms:
             sample = self.transforms(image=image_resized,

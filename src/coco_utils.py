@@ -52,9 +52,7 @@ class ConvertCocoPolysToMask:
         image_id = torch.tensor([image_id])
 
         anno = target["annotations"]
-
         anno = [obj for obj in anno if obj["iscrowd"] == 0]
-
         boxes = [obj["bbox"] for obj in anno]
         # guard against no boxes via resizing
         boxes = torch.as_tensor(boxes, dtype=torch.float32).reshape(-1, 4)
@@ -245,7 +243,5 @@ def get_coco(root, image_set, transforms, mode="instances"):
     return dataset
 
 
-
 def get_coco_kp(root, image_set, transforms):
     return get_coco(root, image_set, transforms, mode="person_keypoints")
-
