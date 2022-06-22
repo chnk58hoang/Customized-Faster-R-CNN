@@ -28,7 +28,7 @@ Inspired by YOLOv2 [[3]](#3), we utilize cluster algorithm (K-Means in this case
 
 Normally, the cluster process uses the [Euclidean metric](https://en.wikipedia.org/wiki/Euclidean_distance) to calculate the distance between samples. However, for this specific task, our ultimate goal is to know what the shape of the bounding box corresponding to the most likely object looks like. Therefore, we adopt IoU (Intersection over Union) of the box as the metric:
 
-<p align="center"><img src="./statics/iou.png" height=300></p>
+<p align="center"><img src="./statics/iou.png" height=100></p>
 
 In this way, the smaller $d$, the more similar 2 boxes.
 
