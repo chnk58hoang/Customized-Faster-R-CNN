@@ -23,7 +23,7 @@ def create_model(num_classes, data, k, mode):
             sizes=(scales,),
             aspect_ratios=(aspect_ratios,)
         )
-    if mode == 'original':
+    elif mode == 'original':
         anchor_generator = AnchorGenerator(
             sizes=((128, 256, 512),),
             aspect_ratios=((0.5, 1.0, 2.0),)
