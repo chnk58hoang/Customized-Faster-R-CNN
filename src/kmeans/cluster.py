@@ -2,6 +2,8 @@ from sklearn.cluster import KMeans
 import numpy as np
 
 
+"Đây là phần cải tiến của chúng em, các hàm phân cụm phục vụ cho quá trình khởi tạo Anchor"
+
 def euclidean_base_cluster(data, k):
     "Phân cụm kmeans dựa trên khoảng cách Euclidean"
     X = data[['b_w', "b_h"]].to_numpy()
