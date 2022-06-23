@@ -1,13 +1,13 @@
 import argparse
 import pandas as pd
-from src.kmeans.modifydata import modify
-from src.kmeans.xml_to_csv import xml_to_csv
+from kmeans.modifydata import modify
+from kmeans.xml_to_csv import xml_to_csv
 from config import *
-from src.dataset.dataset import CustomDataset
+from dataset.dataset import CustomDataset
 from torch.utils.data import DataLoader, random_split
-from src.engine.model import create_model
-from src.engine.engine import train_one_epoch, evaluate
-from src.engine.utils import *
+from engine.model import create_model
+from engine.engine import train_one_epoch, evaluate
+from engine.utils import *
 
 if __name__ == '__main__':
 
