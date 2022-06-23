@@ -18,7 +18,7 @@ With that in mind, when we train Faster R-CNN with our custom datasets, we often
 
 # Anchor boxes analysis using K-Means
 
-Inspired by YOLOv3 [[3]](#3), we utilize cluster algorithm (K-Means in this case) to predict anchor boxes. The idea of K-Means algorithm is very simple:
+Inspired by YOLOv2 [[3]](#3), we utilize cluster algorithm (K-Means in this case) to predict anchor boxes. The idea of K-Means algorithm is very simple:
 - Randomly select *k* clusters.
 - Divide the point to the nearest cluster.
 - Update each cluster to the mean value of the points of the current cluster.
@@ -26,7 +26,9 @@ Inspired by YOLOv3 [[3]](#3), we utilize cluster algorithm (K-Means in this case
 
 <p align="center"><img src="./statics/kmeans.gif" height=230></p>
 
-Normally, the cluster process uses the [Euclidean metric](https://en.wikipedia.org/wiki/Euclidean_distance) to calculate the distance between samples. However, for this specific task, our ultimate goal is to know what the shape of the bounding box corresponding to the most likely object looks like. Therefore, we adopt IoU (Intersection over Union) of the box as the metric: $$d = 1 - \text{IoU}(\text{box}, \text{box\_cluster})$$
+Normally, the cluster process uses the [Euclidean metric](https://en.wikipedia.org/wiki/Euclidean_distance) to calculate the distance between samples. However, for this specific task, our ultimate goal is to know what the shape of the bounding box corresponding to the most likely object looks like. Therefore, we adopt IoU (Intersection over Union) of the box as the metric:
+
+<p align="center"><img src="./statics/iou.png" height=100></p>
 
 In this way, the smaller $d$, the more similar 2 boxes.
 
@@ -38,4 +40,4 @@ Ren, Shaoqing, et al. "Faster r-cnn: Towards real-time object detection with reg
 Girshick, Ross. "Fast r-cnn." Proceedings of the IEEE international conference on computer vision. 2015.
 
 <a id="3">[3]</a>
-Redmon, Joseph, and Ali Farhadi. "Yolov3: An incremental improvement." arXiv preprint arXiv:1804.02767 (2018).
+Redmon, Joseph and Farhadi, Ali. "YOLO9000: better, faster, stronger" arXiv preprint arXiv:1612.08242 (2016).
