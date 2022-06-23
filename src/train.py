@@ -1,7 +1,7 @@
 import argparse
 import pandas as pd
-from modifydata import modify
-from xml_to_csv import xml_to_csv
+from src.kmeans.modifydata import modify
+from src.kmeans.xml_to_csv import xml_to_csv
 from config import *
 from src.dataset.dataset import CustomDataset
 from torch.utils.data import DataLoader, random_split

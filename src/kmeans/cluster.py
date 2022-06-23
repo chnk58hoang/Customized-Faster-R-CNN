@@ -3,7 +3,7 @@ import numpy as np
 
 
 def euclidean_base_cluster(data, k):
-    "Phân cụm k-means dựa trên khoảng cách Euclidean"
+    "Phân cụm kmeans dựa trên khoảng cách Euclidean"
     X = data[['b_w', "b_h"]].to_numpy()
     K = KMeans(k, random_state=0)
     labels = K.fit(X)
@@ -46,7 +46,7 @@ def translate_boxes(boxes):
 
 def kmeans(boxes, k, dist=np.median):
     """
-    Phân cụm k-means dựa trên IoU
+    Phân cụm kmeans dựa trên IoU
     """
     rows = boxes.shape[0]
 

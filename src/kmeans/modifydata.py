@@ -13,24 +13,16 @@ def _compute_new_static_size(width, height, min_dimension, max_dimension):
     orig_width = width
     orig_min_dim = min(orig_height, orig_width)
 
-    # Calculates the larger of the possible sizes
     large_scale_factor = min_dimension / float(orig_min_dim)
-    # Scaling orig_(height|width) by large_scale_factor will make the smaller
-    # dimension equal to min_dimension, save for floating point rounding errors.
-    # For reasonably-sized images, taking the nearest integer will reliably
-    # eliminate this error.
+
     large_height = int(round(orig_height * large_scale_factor))
     large_width = int(round(orig_width * large_scale_factor))
     large_size = [large_height, large_width]
     if max_dimension:
-        # Calculates the smaller of the possible sizes, use that if the larger
-        # is too big.
+
         orig_max_dim = max(orig_height, orig_width)
         small_scale_factor = max_dimension / float(orig_max_dim)
-        # Scaling orig_(height|width) by small_scale_factor will make the larger
-        # dimension equal to max_dimension, save for floating point rounding
-        # errors. For reasonably-sized images, taking the nearest integer will
-        # reliably eliminate this error.
+
         small_height = int(round(orig_height * small_scale_factor))
         small_width = int(round(orig_width * small_scale_factor))
         small_size = [small_height, small_width]

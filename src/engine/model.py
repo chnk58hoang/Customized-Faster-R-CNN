@@ -1,7 +1,7 @@
 import torchvision
 from torchvision.models.detection import FasterRCNN
 from torchvision.models.detection.rpn import AnchorGenerator
-from cluster import iou_base_cluster
+from src.kmeans.cluster import iou_base_cluster
 
 
 def create_model(num_classes, data, k, mode):
