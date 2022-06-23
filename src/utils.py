@@ -4,7 +4,7 @@ import numpy as np
 import torch
 import matplotlib.pyplot as plt
 from albumentations.pytorch import ToTensorV2
-from src.config import DEVICE, CLASSES
+from config import *
 
 plt.style.use('ggplot')
 

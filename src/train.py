@@ -5,9 +5,9 @@ from kmeans.xml_to_csv import xml_to_csv
 from config import *
 from dataset.dataset import CustomDataset
 from torch.utils.data import DataLoader, random_split
-from engine.model import create_model
-from engine.engine import train_one_epoch, evaluate
-from engine.utils import *
+from trainer.model import create_model
+from engine import train_one_epoch, evaluate
+from src.utils import *
 from kmeans.cluster import iou_base_cluster
 
 if __name__ == '__main__':

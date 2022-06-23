@@ -3,9 +3,9 @@ import math
 import sys
 import time
 import torchvision
-from custom_utils import *
-from coco_eval import CocoEvaluator
-from coco_utils import get_coco_api_from_dataset
+from trainer.custom_utils import *
+from trainer.coco_eval import CocoEvaluator
+from trainer.coco_utils import *
 
 
 def train_one_epoch(model, optimizer, data_loader, device, epoch, train_loss_hist, print_freq, scaler=None,
