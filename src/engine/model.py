@@ -1,10 +1,10 @@
 import torchvision
 from torchvision.models.detection import FasterRCNN
 from torchvision.models.detection.rpn import AnchorGenerator
-from src.kmeans.cluster import iou_base_cluster
 
 
-def create_model(num_classes, data, k, mode):
+
+def create_model(num_classes, data, k, mode,cluster):
     """
     num_classes: số lớp đối tượng trong bộ dữ liệu
     data: dữ liệu về kích thước, tỉ lệ cạnh của các bounding box
@@ -18,7 +18,7 @@ def create_model(num_classes, data, k, mode):
 
     "Khởi tạo Anchor"
     if mode == 'kmean':
-        aspect_ratios, scales = iou_base_cluster(data, k)
+        aspect_ratios, scales = cluster(data, k)
         anchor_generator = AnchorGenerator(
             sizes=(scales,),
             aspect_ratios=(aspect_ratios,)

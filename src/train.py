@@ -8,6 +8,7 @@ from torch.utils.data import DataLoader, random_split
 from engine.model import create_model
 from engine.engine import train_one_epoch, evaluate
 from engine.utils import *
+from kmeans.cluster import iou_base_cluster
 
 if __name__ == '__main__':
 
@@ -40,7 +41,7 @@ if __name__ == '__main__':
     valid_dataloader = DataLoader(valid_dataset, batch_size=args.batchsize, shuffle=False, collate_fn=collate_fn)
 
     "Tạo mô hình"
-    model = create_model(len(CLASSES), k=args.k, data=modified_data, mode=args.mode)
+    model = create_model(len(CLASSES), k=args.k, data=modified_data, mode=args.mode,cluster=iou_base_cluster)
     model.to(DEVICE)
 
     """Tạo hàm tối ưu, hàm điều chỉnh hệ số học"""
