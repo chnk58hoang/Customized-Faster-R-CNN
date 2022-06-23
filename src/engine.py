@@ -1,10 +1,7 @@
-import torch
 import math
 import sys
-import time
-import torchvision
 from trainer.custom_utils import *
-from trainer.coco_eval import CocoEvaluator
+from coco_eval import CocoEvaluator
 from trainer.coco_utils import *
 
 
