@@ -53,7 +53,7 @@ class FileLoader():
             image_resized = torch.tensor(image_resized)
             image_resized = image_resized.transpose(0, 2)
             annot_filename = image_name[:-4] + '.xml'
-            annot_file_path = os.path.join(self.labels_path, annot_filename)
+            annot_file_path = os.path.join(self.label_paths, annot_filename)
 
             boxes = []
             labels = []
