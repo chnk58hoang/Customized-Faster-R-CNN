@@ -3,7 +3,7 @@ import math
 import sys
 import time
 import torchvision
-import custom_utils
+from custom_utils import *
 from coco_eval import CocoEvaluator
 from coco_utils import get_coco_api_from_dataset
 
@@ -19,8 +19,8 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch, train_loss_his
     """
 
     model.train()
-    metric_logger = custom_utils.MetricLogger(delimiter="  ")
-    metric_logger.add_meter("lr", custom_utils.SmoothedValue(window_size=1, fmt="{value:.6f}"))
+    metric_logger = MetricLogger(delimiter="  ")
+    metric_logger.add_meter("lr", SmoothedValue(window_size=1, fmt="{value:.6f}"))
     header = f"Epoch: [{epoch}]"
 
 
@@ -35,7 +35,7 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch, train_loss_his
             loss_dict = model(images, targets)
             losses = sum(loss for loss in loss_dict.values())
 
-        loss_dict_reduced = custom_utils.reduce_dict(loss_dict)
+        loss_dict_reduced = reduce_dict(loss_dict)
         losses_reduced = sum(loss for loss in loss_dict_reduced.values())
 
         loss_value = losses_reduced.item()
@@ -88,7 +88,7 @@ def evaluate(model, data_loader, device):
     torch.set_num_threads(1)
     cpu_device = torch.device("cpu")
     model.eval()
-    metric_logger = custom_utils.MetricLogger(delimiter="  ")
+    metric_logger = MetricLogger(delimiter="  ")
     header = "Test:"
 
     coco = get_coco_api_from_dataset(data_loader.dataset)
