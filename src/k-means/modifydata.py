@@ -2,6 +2,7 @@ import numpy as np
 
 
 def change_to_wh(data):
+    "Hàm tính toán chiều rộng và chiều cao các bounding box dựa trên tọa độ"
     data['w'] = data['xmax'] - data['xmin'] + 1
     data['h'] = data['ymax'] - data['ymin'] + 1
     return data
@@ -42,15 +43,13 @@ def _compute_new_static_size(width, height, min_dimension, max_dimension):
     return new_size[1], new_size[0]
 
 
-def modify(data,min_dimension,max_dimension):
-
+def modify(data, min_dimension, max_dimension):
     data = change_to_wh(data)
     data['new_w'], data['new_h'] = np.vectorize(_compute_new_static_size)(data['width'],
                                                                           data['height'], min_dimension, max_dimension)
     data['b_w'] = data['new_w'] * data['w'] / data['width']
     data['b_h'] = data['new_h'] * data['h'] / data['height']
     data['b_ar'] = data['b_w'] / data['b_h']
-
 
     base_box = 512 * 512
     data['b_area_scale'] = (data['w'] * data['h'] / (base_box)).apply(np.sqrt)

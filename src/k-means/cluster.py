@@ -2,7 +2,8 @@ from sklearn.cluster import KMeans
 import numpy as np
 
 
-def euclid_base_cluster(data, k):
+def euclidean_base_cluster(data, k):
+    "Phân cụm k-means dựa trên khoảng cách Euclidean"
     X = data[['b_w', "b_h"]].to_numpy()
     K = KMeans(k, random_state=0)
     labels = K.fit(X)
@@ -14,7 +15,7 @@ def euclid_base_cluster(data, k):
 
 
 def iou(box, clusters):
-    """Calculate IoU between a box and  clusters """
+    """ Tính IoU giữa bounding box và một cluster"""
     x = np.minimum(clusters[:, 0], box[0])
     y = np.minimum(clusters[:, 1], box[1])
     if np.count_nonzero(x == 0) > 0 or np.count_nonzero(y == 0) > 0:
@@ -30,12 +31,12 @@ def iou(box, clusters):
 
 
 def avg_iou(boxes, clusters):
-    """Calculates the average Intersection over Union (IoU) between a list of boxes and clusters."""
+    """ Tính IoU trung bình giữa nhiều box và một cluster """
     return np.mean([np.max(iou(boxes[i], clusters)) for i in range(boxes.shape[0])])
 
 
 def translate_boxes(boxes):
-    """Translates all the boxes to the origin."""
+    """ Tịnh tiến các box về gốc tọa độ """
     new_boxes = boxes.copy()
     for row in range(new_boxes.shape[0]):
         new_boxes[row][2] = np.abs(new_boxes[row][2] - new_boxes[row][0])
@@ -45,7 +46,7 @@ def translate_boxes(boxes):
 
 def kmeans(boxes, k, dist=np.median):
     """
-    Calculates k-means clustering with the Intersection over Union (IoU) metric.
+    Phân cụm k-means dựa trên IoU
     """
     rows = boxes.shape[0]
 
@@ -53,8 +54,6 @@ def kmeans(boxes, k, dist=np.median):
     last_clusters = np.zeros((rows,))
 
     np.random.seed()
-
-    # the Forgy method will fail if the whole array contains the same rows
     clusters = boxes[np.random.choice(rows, k, replace=False)]
 
     while True:
@@ -75,6 +74,7 @@ def kmeans(boxes, k, dist=np.median):
 
 
 def iou_base_cluster(data, k):
+    """Tiến hành phân cụm dựa trên IoU"""
     X = data[['b_w', 'b_h']].to_numpy()
     cluster = kmeans(X, k)
     ar_iou = cluster[:, 0] / cluster[:, 1]

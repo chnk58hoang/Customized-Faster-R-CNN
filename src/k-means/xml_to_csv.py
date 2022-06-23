@@ -3,7 +3,10 @@ import pandas as pd
 import xml.etree.ElementTree as ET
 
 
+
 def xml_to_csv(path):
+    "Hàm đưa thông số các object từ file .xml ra file .csv"
+    "path: đường dẫn đến thư mục chứa các file .csv"
     xml_list = []
     for xml_file in glob.glob(path + '/*.xml'):
         tree = ET.parse(xml_file)
@@ -25,8 +28,9 @@ def xml_to_csv(path):
 
     column_name = ['filename', 'width', 'height', 'class', 'xmin', 'ymin', 'xmax', 'ymax']
     xml_df = pd.DataFrame(xml_list, columns=column_name)
-    print('Successfully converted xml to csv.')
     return xml_df
+
+
 
 
 

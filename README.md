@@ -18,7 +18,7 @@ With that in mind, when we train Faster R-CNN with our custom datasets, we often
 
 # Anchor boxes analysis using K-Means
 
-Inspired by YOLOv2 [[3]](#3), we utilize cluster algorithm (K-Means in this case) to predict anchor boxes. The idea of K-Means algorithm is very simple:
+Inspired by YOLO9000 [[3]](#3), we utilize cluster algorithm (K-Means in this case) to predict anchor boxes. The idea of K-Means algorithm is very simple:
 - Randomly select *k* clusters.
 - Divide the point to the nearest cluster.
 - Update each cluster to the mean value of the points of the current cluster.

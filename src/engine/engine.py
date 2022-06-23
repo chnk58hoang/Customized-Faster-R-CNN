@@ -3,24 +3,29 @@ import math
 import sys
 import time
 import torchvision
-import custom_utils
-from coco_eval import CocoEvaluator
-from coco_utils import get_coco_api_from_dataset
+from src.cocosupport import custom_utils
+from src.cocosupport.coco_eval import CocoEvaluator
+from src.cocosupport.coco_utils import get_coco_api_from_dataset
 
 
 def train_one_epoch(model, optimizer, data_loader, device, epoch, train_loss_hist, print_freq, scaler=None,
                     scheduler=None):
+
+    "Hàm huấn luyện cho một epoch"
+
+    """
+    model: mô hình huấn luyện
+    optimizer: Hàm tối ưu 
+    """
+
     model.train()
     metric_logger = custom_utils.MetricLogger(delimiter="  ")
     metric_logger.add_meter("lr", custom_utils.SmoothedValue(window_size=1, fmt="{value:.6f}"))
     header = f"Epoch: [{epoch}]"
 
-    # List to store batch losses.
+
     batch_loss_list = []
-
     lr_scheduler = scheduler
-
-
     step_counter = 0
 
     for images, targets in metric_logger.log_every(data_loader, print_freq, header):
@@ -30,7 +35,6 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch, train_loss_his
             loss_dict = model(images, targets)
             losses = sum(loss for loss in loss_dict.values())
 
-        # reduce losses over all GPUs for logging purposes
         loss_dict_reduced = custom_utils.reduce_dict(loss_dict)
         losses_reduced = sum(loss for loss in loss_dict_reduced.values())
 
@@ -79,8 +83,8 @@ def _get_iou_types(model):
 
 @torch.inference_mode()
 def evaluate(model, data_loader, device):
+    "Hàm đánh giá mô hình"
     n_threads = torch.get_num_threads()
-    # FIXME remove this and make paste_masks_in_image run on the GPU
     torch.set_num_threads(1)
     cpu_device = torch.device("cpu")
     model.eval()
@@ -108,12 +112,11 @@ def evaluate(model, data_loader, device):
         evaluator_time = time.time() - evaluator_time
         metric_logger.update(model_time=model_time, evaluator_time=evaluator_time)
 
-    # gather the stats from all processes
+
     metric_logger.synchronize_between_processes()
     print("Averaged stats:", metric_logger)
     coco_evaluator.synchronize_between_processes()
 
-    # accumulate predictions from all images
     coco_evaluator.accumulate()
     coco_evaluator.summarize()
     torch.set_num_threads(n_threads)
