@@ -9,8 +9,9 @@ import torch.distributed as dist
 
 
 class SmoothedValue:
-    """Track a series of values and provide access to smoothed values over a
-    window or the global series average.
+    """
+    Track a series of values and provide access to smoothed values 
+    over a window or the global series average.
     """
 
     def __init__(self, window_size=20, fmt=None):
@@ -85,12 +86,13 @@ def all_gather(data):
 
 def reduce_dict(input_dict, average=True):
     """
-    Args:
-        input_dict (dict): all the values will be reduced
-        average (bool): whether to do average or sum
     Reduce the values in the dictionary from all processes so that all processes
     have the averaged results. Returns a dict with the same fields as
     input_dict, after reduction.
+    
+    Args:
+        input_dict (dict): all the values will be reduced
+        average (bool): whether to do average or sum
     """
     world_size = get_world_size()
     if world_size < 2:
@@ -213,9 +215,7 @@ def mkdir(path):
 
 
 def setup_for_distributed(is_master):
-    """
-    This function disables printing when not in master process
-    """
+    """This function disables printing when not in master process"""
     import builtins as __builtin__
 
     builtin_print = __builtin__.print

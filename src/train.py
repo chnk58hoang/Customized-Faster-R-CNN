@@ -5,7 +5,7 @@ from modifydata import modify
 from xml_to_csv import xml_to_csv
 from config import *
 from sklearn.model_selection import train_test_split
-from dataset import CustomDataset
+from dataset import CustomDataset, FileLoader
 from torch.utils.data import DataLoader, random_split
 from model import create_model
 from engine import train_one_epoch, evaluate
@@ -20,7 +20,6 @@ parser.add_argument('--mode', type=str, help='mode')
 parser.add_argument('--lr', default=0.001, type=float)
 parser.add_argument('--finetune', default=False, type=bool)
 parser.add_argument('--batchsize', default=32, type=int)
-
 args = parser.parse_args()
 
 """Annotation from xml to csv"""
@@ -35,17 +34,18 @@ modified_data = modify(data=data, min_dimension=args.min_dim, max_dimension=args
 
 "create datasets and dataloaders"
 
-train_val_dataset = CustomDataset(images_path=TRAIN_IMAGES, labels_path=TRAIN_LABELS, width=RESIZE_TO, height=RESIZE_TO,
-                                  classes=CLASSES)
-train_len = int(len(train_val_dataset) * 0.85)
-valid_len = len(train_val_dataset) - train_len
+file_loader = FileLoader(image_paths=TRAIN_IMAGES, label_paths=TRAIN_LABELS, width=RESIZE_TO, height=RESIZE_TO,
+                         classes=CLASSES)
+all_data = file_loader()
+train_data_len = int(0.85 * len(all_data))
+train_data_list = all_data[:train_data_len]
+valid_data_list = all_data[train_data_len:]
 
-train_dataset, val_dataset = random_split(train_val_dataset, lengths=[train_len, valid_len])
-train_dataset.transforms = get_train_transform()
-val_dataset.transforms = get_valid_transform()
+train_dataset = CustomDataset(datalist=train_data_list,transforms=get_train_transform())
+valid_dataset = CustomDataset(datalist=valid_data_list,transforms=get_valid_transform())
 
 train_dataloader = DataLoader(train_dataset, batch_size=args.batchsize, shuffle=True, collate_fn=collate_fn)
-valid_dataloader = DataLoader(val_dataset, batch_size=args.batchsize, shuffle=False, collate_fn=collate_fn)
+valid_dataloader = DataLoader(valid_dataset, batch_size=args.batchsize, shuffle=False, collate_fn=collate_fn)
 
 """create Faster R-CNN model"""
 model = create_model(len(CLASSES), k=args.k, data=modified_data, mode=args.mode, fine_tune=args.finetune)

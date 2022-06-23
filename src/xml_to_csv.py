@@ -1,11 +1,6 @@
-import os
 import glob
 import pandas as pd
 import xml.etree.ElementTree as ET
-import numpy as np
-import matplotlib.pyplot as plt
-import math
-import seaborn as sns
 
 
 def xml_to_csv(path):

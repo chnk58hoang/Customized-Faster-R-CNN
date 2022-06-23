@@ -19,15 +19,7 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch, train_loss_his
     batch_loss_list = []
 
     lr_scheduler = scheduler
-    """
-    if epoch == 0:
-        warmup_factor = 1.0 / 1000
-        warmup_iters = min(1000, len(data_loader) - 1)
 
-        lr_scheduler = torch.optim.lr_scheduler.LinearLR(
-            optimizer, start_factor=warmup_factor, total_iters=warmup_iters
-        )
-    """
 
     step_counter = 0
 

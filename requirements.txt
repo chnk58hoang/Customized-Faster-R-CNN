@@ -1,0 +1,9 @@
+numpy
+scikit-learn
+pycocotools
+torch
+opencv-python
+torchvision
+pandas
+albumentations
+matplotlib
