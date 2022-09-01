@@ -17,5 +17,5 @@ BATCH_SIZE = 32
 RESIZE_TO = 512
 
 
-TRAIN_IMAGES = '/kaggle/input/pascal-voc-2012/VOC2012/JPEGImages/'
-TRAIN_LABELS = '/kaggle/input/pascal-voc-2012/VOC2012/Annotations/'
+TRAIN_IMAGES = '/kaggle/working/pascal-voc-2012/VOC2012/JPEGImages/'
+TRAIN_LABELS = '/kaggle/working/pascal-voc-2012/VOC2012/Annotations/'
